@@ -37,10 +37,10 @@ int main() {
   }
   printf("\n");
 
-	printf("Peeked %d\n", vector_peek(vec));
-	vector_push(vec, 84);
-	vector_print(vec);
-	printf("Peeked %d\n", vector_peek(vec));
+  printf("Peeked %d\n", vector_peek(vec));
+  vector_push(vec, 84);
+  vector_print(vec);
+  printf("Peeked %d\n", vector_peek(vec));
 
   vector_destroy(vec);
 }
