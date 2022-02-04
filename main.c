@@ -42,5 +42,17 @@ int main() {
   vector_print(vec);
   printf("Peeked %d\n", vector_peek(vec));
 
+  printf("\n");
+
+  for (int i = 0; i < 8; i++) {
+    int popped;
+    if (!vector_pop(vec, &popped)) {
+      fprintf(stderr, "Failed to pop value from vector");
+      return 1;
+    }
+    printf("Popped: %d\n", popped);
+    vector_print(vec);
+  }
+
   vector_destroy(vec);
 }

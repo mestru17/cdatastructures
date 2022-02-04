@@ -78,7 +78,7 @@ bool vector_push(vector *vec, int value);
 // vector_get(vec, vector_length(vec) - 1). `vec` must not be NULL.
 int vector_peek(vector *vec);
 
-// TODO: vector_pop
+bool vector_pop(vector *vec, int *value);
 
 // Prints a string representation of a given vector. `vec` must not be NULL.
 void vector_print(vector *vec);

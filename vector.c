@@ -29,11 +29,65 @@
 #include <stdio.h>
 #include <string.h>
 
+// How much to scale vector capacity by when growing.
+static const double GROWTH_FACTOR = 2.0;
+
+// How much to scale vector capacity by when shrinking.
+static const double SHRINK_FACTOR = 1.0 / GROWTH_FACTOR;
+
+// Threshold at which to shrink vector. Vector will be shrunk if its length
+// is less than or equal to `SHRINK_THRESHOLD` * vector capacity AND the
+// shrunken capacity is greater than or equal to `MIN_SHRINK_CAPACITY`; see the
+// should_shrink function if necessary.
+static const double SHRINK_THRESHOLD = 0.3;
+
+// The minimum capacity that a vector is able to shrunk to. In other words, a
+// vector will never be shrunk to have a capacity smaller than this; see
+// `SHRINK_THRESHOLD` for more details.
+static const size_t MIN_SHRINK_CAPACITY = 4;
+
 typedef struct vector {
   int *values;
   size_t length;
   size_t capacity;
 } vector;
+
+// Scales a given vectors capacity by a given factor. Returns true if the
+// resizing succeeds and false if `vec` is too large to grow or an error
+// occurs during re-allocation. `vec` is too large to grow if the scaled
+// capacity would cause an unsigned integer wrap.
+static bool resize(vector *vec, double scale_factor) {
+  size_t new_capacity = vec->capacity * scale_factor;
+  if (!vector_capacity_ok(new_capacity)) {
+    return false;
+  }
+
+  int *new_values = realloc(vec->values, new_capacity * sizeof(int));
+  if (new_values == NULL) {
+    return false;
+  }
+
+  vec->capacity = new_capacity;
+  vec->values = new_values;
+  return true;
+}
+
+// Grows a given vector by `GROWTH_FACTOR`.
+static bool grow(vector *vec) {
+  return resize(vec, GROWTH_FACTOR);
+}
+
+// Shrinks a given vector by `SHRINK_FACTOR`.
+static bool shrink(vector *vec) {
+  return resize(vec, SHRINK_FACTOR);
+}
+
+// Checks if a given vector has enough excess capacity that it should shrink.
+static bool should_shrink(vector *vec) {
+  size_t threshold = SHRINK_THRESHOLD * vec->capacity;
+  size_t shrunken_capacity = SHRINK_FACTOR * vec->capacity;
+  return vec->length <= threshold && shrunken_capacity >= MIN_SHRINK_CAPACITY;
+}
 
 bool vector_capacity_ok(size_t capacity) {
   return capacity > 0 && capacity <= SIZE_MAX / sizeof(int);
@@ -80,25 +134,6 @@ bool vector_full(vector *vec) {
   return vec->length == vec->capacity;
 }
 
-// Grows a given vector's capacity to twice what it was. Returns true if
-// growing succeeds and false if `vec` is too large to grow or an error
-// occurs during re-allocation. `vec` is too large to grow if the expanded
-// capacity would cause an unsigned integer wrap.
-static bool grow(vector *vec) {
-  size_t new_capacity = vec->capacity * 2;
-  if (!vector_capacity_ok(new_capacity)) {
-    return false;
-  }
-
-  int *new_values = realloc(vec, new_capacity * sizeof(int));
-  if (new_values == NULL) {
-    return false;
-  }
-
-  vec->capacity = new_capacity;
-  vec->values = new_values;
-}
-
 bool vector_insert(vector *vec, size_t index, int value) {
   assert(vec != NULL && "Failed to insert value into vector because pointer was NULL");
   assert(index >= 0 && index <= vec->length && "Failed to insert value into vector because index was out of bounds");
@@ -135,6 +170,22 @@ bool vector_push(vector *vec, int value) {
 int vector_peek(vector *vec) {
   assert(vec != NULL && "Failed to peek value from vector because pointer was NULL");
   return vector_get(vec, vec->length - 1);
+}
+
+bool vector_pop(vector *vec, int *value) {
+  assert(vec != NULL && "Failed to pop value from vector because vector pointer was NULL");
+  assert(value != NULL && "Failed to pop value from vector because value pointer was NULL");
+
+  int popped_value = vector_peek(vec);
+  vec->length--;
+
+  // Shrink if there is a lot of unused capacity
+  if (should_shrink(vec) && !shrink(vec)) {
+    return false;
+  }
+
+  *value = popped_value;
+  return true;
 }
 
 void vector_print(vector *vec) {
