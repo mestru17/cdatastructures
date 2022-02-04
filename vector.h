@@ -69,6 +69,14 @@ bool vector_insert(vector *vec, size_t index, int value);
 // empty and `index` must be within bounds.
 int vector_get(vector *vec, size_t index);
 
+// Removes a value at a given index in a given vector. The removed value is put
+// into `value`. Returns false if the operation tried to shrink the vector and
+// failed because of an error during re-allocation. Otherwise returns true.
+// Regardless of the return value, the removed value will be popped into
+// `value`. `vec` and `value` must not be NULL and `index` must be within
+// bounds.
+bool vector_remove(vector *vec, size_t index, int *value);
+
 // Pushes a value onto the end of a given vector. Is functionally equivalent to
 // vector_insert(vec, vector_length(vec), value). See vector_insert for failure
 // conditions. `vec` must not be NULL.
@@ -78,11 +86,9 @@ bool vector_push(vector *vec, int value);
 // vector_get(vec, vector_length(vec) - 1). `vec` must not be NULL.
 int vector_peek(vector *vec);
 
-// Pops a value off the end of a given vector. The value is popped into
-// `value`. Returns false if the operation tried to shrink the vector and
-// failed because of an error during re-allocation. Otherwise returns true.
-// Regardless of the return value, the popped value will be popped into
-// `value`. `vec` and `value` must not be NULL.
+// Pops a value off the end of a given vector. Is functionally equivalent to
+// vector_remove(vec, vector_length(vec) - 1, value). See vector_remove for 
+// failure conditions.
 bool vector_pop(vector *vec, int *value);
 
 // Prints a string representation of a given vector. `vec` must not be NULL.

@@ -162,6 +162,24 @@ int vector_get(vector *vec, size_t index) {
   return *(vec->values + index);
 }
 
+bool vector_remove(vector *vec, size_t index, int *value) {
+  assert(vec != NULL && "Failed to remove value from vector because pointer was NULL");
+
+  *value = vector_get(vec, index);
+
+  // Move elements backwards if necessary
+  if (index < vec->length - 1) {
+    int *dst = vec->values + index;
+    int *src = dst + 1;
+    size_t num = vec->length - 1 - index;
+    memmove(dst, src, num * sizeof(int));
+  }
+  vec->length--;
+
+  // Shrink if there is a excess capacity
+  return !should_shrink(vec) || shrink(vec);
+}
+
 bool vector_push(vector *vec, int value) {
   assert(vec != NULL && "Failed to push value onto vector because pointer was NULL");
   return vector_insert(vec, vec->length, value);
@@ -175,12 +193,7 @@ int vector_peek(vector *vec) {
 bool vector_pop(vector *vec, int *value) {
   assert(vec != NULL && "Failed to pop value from vector because vector pointer was NULL");
   assert(value != NULL && "Failed to pop value from vector because value pointer was NULL");
-
-  *value = vector_peek(vec);
-  vec->length--;
-
-  // Shrink if there is a excess capacity
-  return !should_shrink(vec) || shrink(vec);
+  return vector_remove(vec, vec->length - 1, value);
 }
 
 void vector_print(vector *vec) {

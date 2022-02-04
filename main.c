@@ -44,7 +44,7 @@ int main() {
 
   printf("\n");
 
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 3; i++) {
     int popped;
     if (!vector_pop(vec, &popped)) {
       fprintf(stderr, "Failed to pop value from vector");
@@ -53,6 +53,16 @@ int main() {
     printf("Popped: %d\n", popped);
     vector_print(vec);
   }
+
+  printf("\n");
+
+  int removed;
+  if (!vector_remove(vec, 1, &removed)) {
+    fprintf(stderr, "Failed to remove value from vector");
+    return 1;
+  }
+  printf("Removed %d\n", removed);
+  vector_print(vec);
 
   vector_destroy(vec);
 }
