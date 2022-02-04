@@ -44,7 +44,7 @@ int main() {
 
   printf("\n");
 
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < 5; i++) {
     int popped;
     if (!vector_pop(vec, &popped)) {
       fprintf(stderr, "Failed to pop value from vector");

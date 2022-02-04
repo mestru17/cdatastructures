@@ -176,16 +176,11 @@ bool vector_pop(vector *vec, int *value) {
   assert(vec != NULL && "Failed to pop value from vector because vector pointer was NULL");
   assert(value != NULL && "Failed to pop value from vector because value pointer was NULL");
 
-  int popped_value = vector_peek(vec);
+  *value = vector_peek(vec);
   vec->length--;
 
-  // Shrink if there is a lot of unused capacity
-  if (should_shrink(vec) && !shrink(vec)) {
-    return false;
-  }
-
-  *value = popped_value;
-  return true;
+  // Shrink if there is a excess capacity
+  return !should_shrink(vec) || shrink(vec);
 }
 
 void vector_print(vector *vec) {
