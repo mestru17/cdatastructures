@@ -78,6 +78,11 @@ bool vector_push(vector *vec, int value);
 // vector_get(vec, vector_length(vec) - 1). `vec` must not be NULL.
 int vector_peek(vector *vec);
 
+// Pops a value off the end of a given vector. The value is popped into
+// `value`. Returns false if the operation tried to shrink the vector and
+// failed because of an error during re-allocation. Otherwise returns true.
+// Regardless of the return value, the popped value will be popped into
+// `value`. `vec` and `value` must not be NULL.
 bool vector_pop(vector *vec, int *value);
 
 // Prints a string representation of a given vector. `vec` must not be NULL.
