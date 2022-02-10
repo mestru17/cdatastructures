@@ -134,6 +134,20 @@ bool vector_full(vector *vec) {
   return vec->length == vec->capacity;
 }
 
+int vector_get(vector *vec, size_t index) {
+  assert(vec != NULL && "Failed to get value from vector because pointer was NULL");
+  assert(!vector_empty(vec) && "Failed to get element from vector because vector was empty");
+  assert(index < vec->length && "Failed to get element from vector because index was out of bounds");
+  return *(vec->values + index);
+}
+
+void vector_set(vector *vec, size_t index, int value) {
+  assert(vec != NULL && "Failed to set value in vector because pointer was NULL");
+  assert(!vector_empty(vec) && "Failed to set value in vector because it was empty");
+  assert(index < vec->length && "Failed to set element in vector because index was out of bounds");
+  *(vec->values + index) = value;
+}
+
 bool vector_insert(vector *vec, size_t index, int value) {
   assert(vec != NULL && "Failed to insert value into vector because pointer was NULL");
   assert(index >= 0 && index <= vec->length && "Failed to insert value into vector because index was out of bounds");
@@ -153,13 +167,6 @@ bool vector_insert(vector *vec, size_t index, int value) {
   }
   *(vec->values + index) = value;
   return true;
-}
-
-int vector_get(vector *vec, size_t index) {
-  assert(vec != NULL && "Failed to get value from vector because pointer was NULL");
-  assert(!vector_empty(vec) && "Failed to get element from vector because vector was empty");
-  assert(index < vec->length && "Failed to get element from vector because index was out of bounds");
-  return *(vec->values + index);
 }
 
 bool vector_remove(vector *vec, size_t index, int *value) {

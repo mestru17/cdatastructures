@@ -58,16 +58,20 @@ bool vector_empty(vector *vec);
 // `vec` must not be NULL.
 bool vector_full(vector *vec);
 
+// Gets a value at a given index in a given vector. `vec` must not be NULL or
+// empty and `index` must be within bounds.
+int vector_get(vector *vec, size_t index);
+
+// Sets a value at a given index in a given vector. `vec` must not be NULL or
+// empty and `index` must be within bounds.
+void vector_set(vector *vec, size_t index, int value);
+
 // Inserts a given value into a given vector at a given index. Returns true if
 // the insertion succeeds and false if `vec` is full and needs to grow but the
 // growing operation fails. The growing operation can fail if either `vec` is
 // too large to grow or an error occurs during re-allocation. `vec` must not
 // be NULL or empty and `index` must be within bounds.
 bool vector_insert(vector *vec, size_t index, int value);
-
-// Gets a value at a given index in a given vector. `vec` must not be NULL or
-// empty and `index` must be within bounds.
-int vector_get(vector *vec, size_t index);
 
 // Removes a value at a given index in a given vector. The removed value is put
 // into `value`. Returns false if the operation tried to shrink the vector and
