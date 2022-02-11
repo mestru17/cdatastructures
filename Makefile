@@ -1,5 +1,5 @@
 
-all: vectortest
+all: vectortest llisttest
 
 %.o: %.c
 	gcc -g -Wall -c $^
@@ -7,5 +7,8 @@ all: vectortest
 vectortest: vectortest.o vector.o
 	gcc -g -Wall -o $@ $^
 
+llisttest: llisttest.o llist.o
+	gcc -g -Wall -o $@ $^
+
 clean:
-	rm -rf vectortest *.o *.dSYM
+	rm -rf vectortest llisttest *.o
