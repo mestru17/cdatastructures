@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -91,7 +91,7 @@ bool vector_push(vector *vec, int value);
 int vector_peek(vector *vec);
 
 // Pops a value off the end of a given vector. Is functionally equivalent to
-// vector_remove(vec, vector_length(vec) - 1, value). See vector_remove for 
+// vector_remove(vec, vector_length(vec) - 1, value). See vector_remove for
 // failure conditions.
 bool vector_pop(vector *vec, int *value);
 

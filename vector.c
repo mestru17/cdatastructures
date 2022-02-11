@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -25,8 +25,8 @@
 #include <assert.h>
 #include <errno.h>
 #include <stdint.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 // How much to scale vector capacity by when growing.
@@ -73,14 +73,10 @@ static bool resize(vector *vec, double scale_factor) {
 }
 
 // Grows a given vector by `GROWTH_FACTOR`.
-static bool grow(vector *vec) {
-  return resize(vec, GROWTH_FACTOR);
-}
+static bool grow(vector *vec) { return resize(vec, GROWTH_FACTOR); }
 
 // Shrinks a given vector by `SHRINK_FACTOR`.
-static bool shrink(vector *vec) {
-  return resize(vec, SHRINK_FACTOR);
-}
+static bool shrink(vector *vec) { return resize(vec, SHRINK_FACTOR); }
 
 // Checks if a given vector has enough excess capacity that it should shrink.
 static bool should_shrink(vector *vec) {
@@ -94,7 +90,9 @@ bool vector_capacity_ok(size_t capacity) {
 }
 
 vector *vector_create(size_t capacity) {
-  assert(vector_capacity_ok(capacity) && "Failed to create vector because capacity was 0 or would cause an unsigned integer wrap");
+  assert(vector_capacity_ok(capacity) &&
+         "Failed to create vector because capacity was 0 or would cause an "
+         "unsigned integer wrap");
 
   vector *vec = malloc(sizeof(vector));
   if (vec == NULL) {
@@ -125,32 +123,42 @@ size_t vector_length(vector *vec) {
 }
 
 bool vector_empty(vector *vec) {
-  assert(vec != NULL && "Failed to check if vector was empty because pointer was NULL");
+  assert(vec != NULL &&
+         "Failed to check if vector was empty because pointer was NULL");
   return vec->length == 0;
 }
 
 bool vector_full(vector *vec) {
-  assert(vec != NULL && "Failed to check if vector was full because pointer was NULL");
+  assert(vec != NULL &&
+         "Failed to check if vector was full because pointer was NULL");
   return vec->length == vec->capacity;
 }
 
 int vector_get(vector *vec, size_t index) {
-  assert(vec != NULL && "Failed to get value from vector because pointer was NULL");
-  assert(!vector_empty(vec) && "Failed to get element from vector because vector was empty");
-  assert(index < vec->length && "Failed to get element from vector because index was out of bounds");
+  assert(vec != NULL &&
+         "Failed to get value from vector because pointer was NULL");
+  assert(!vector_empty(vec) &&
+         "Failed to get element from vector because vector was empty");
+  assert(index < vec->length &&
+         "Failed to get element from vector because index was out of bounds");
   return *(vec->values + index);
 }
 
 void vector_set(vector *vec, size_t index, int value) {
-  assert(vec != NULL && "Failed to set value in vector because pointer was NULL");
-  assert(!vector_empty(vec) && "Failed to set value in vector because it was empty");
-  assert(index < vec->length && "Failed to set element in vector because index was out of bounds");
+  assert(vec != NULL &&
+         "Failed to set value in vector because pointer was NULL");
+  assert(!vector_empty(vec) &&
+         "Failed to set value in vector because it was empty");
+  assert(index < vec->length &&
+         "Failed to set element in vector because index was out of bounds");
   *(vec->values + index) = value;
 }
 
 bool vector_insert(vector *vec, size_t index, int value) {
-  assert(vec != NULL && "Failed to insert value into vector because pointer was NULL");
-  assert(index >= 0 && index <= vec->length && "Failed to insert value into vector because index was out of bounds");
+  assert(vec != NULL &&
+         "Failed to insert value into vector because pointer was NULL");
+  assert(index >= 0 && index <= vec->length &&
+         "Failed to insert value into vector because index was out of bounds");
 
   // Grow array if necessary
   if (vector_full(vec) && !grow(vec)) {
@@ -170,7 +178,8 @@ bool vector_insert(vector *vec, size_t index, int value) {
 }
 
 bool vector_remove(vector *vec, size_t index, int *value) {
-  assert(vec != NULL && "Failed to remove value from vector because pointer was NULL");
+  assert(vec != NULL &&
+         "Failed to remove value from vector because pointer was NULL");
 
   *value = vector_get(vec, index);
 
@@ -188,18 +197,22 @@ bool vector_remove(vector *vec, size_t index, int *value) {
 }
 
 bool vector_push(vector *vec, int value) {
-  assert(vec != NULL && "Failed to push value onto vector because pointer was NULL");
+  assert(vec != NULL &&
+         "Failed to push value onto vector because pointer was NULL");
   return vector_insert(vec, vec->length, value);
 }
 
 int vector_peek(vector *vec) {
-  assert(vec != NULL && "Failed to peek value from vector because pointer was NULL");
+  assert(vec != NULL &&
+         "Failed to peek value from vector because pointer was NULL");
   return vector_get(vec, vec->length - 1);
 }
 
 bool vector_pop(vector *vec, int *value) {
-  assert(vec != NULL && "Failed to pop value from vector because vector pointer was NULL");
-  assert(value != NULL && "Failed to pop value from vector because value pointer was NULL");
+  assert(vec != NULL &&
+         "Failed to pop value from vector because vector pointer was NULL");
+  assert(value != NULL &&
+         "Failed to pop value from vector because value pointer was NULL");
   return vector_remove(vec, vec->length - 1, value);
 }
 
@@ -215,4 +228,3 @@ void vector_print(vector *vec) {
   }
   printf("]\n");
 }
-
