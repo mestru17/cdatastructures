@@ -285,6 +285,12 @@ bool llist_position(llist *list, int value, size_t *index) {
   return false;
 }
 
+bool llist_empty(llist *list) {
+  assert(list != NULL &&
+         "Failed to check if linked list is empty because pointer was NULL");
+  return list->length == 0;
+}
+
 void llist_print(llist *list) {
   assert(list != NULL &&
          "Failed to print linked list because pointer was NULL");

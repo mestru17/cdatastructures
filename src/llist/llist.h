@@ -43,6 +43,7 @@ void llist_clear(llist *list);
 bool llist_contains(llist *list, int value);
 bool llist_equals(llist *list1, llist *list2);
 bool llist_position(llist *list, int value, size_t *index);
+bool llist_empty(llist *list);
 void llist_print(llist *list);
 
 #endif
