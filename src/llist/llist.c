@@ -90,6 +90,19 @@ llist *llist_create() {
   return list;
 }
 
+llist *llist_create_from_values(int *values, size_t length) {
+  assert(values != NULL &&
+         "Failed to create linked list from values because value array pointer "
+         "was NULL");
+
+  llist *list = llist_create();
+  for (int i = 0; i < length; i++) {
+    int value = *(values + i);
+    llist_push(list, value);
+  }
+  return list;
+}
+
 void llist_destroy(llist *list) {
   if (list != NULL) {
     llist_clear(list);
@@ -225,6 +238,32 @@ bool llist_contains(llist *list, int value) {
     }
   }
   return false;
+}
+
+bool llist_equals(llist *list1, llist *list2) {
+  assert((list1 != NULL || list2 != NULL) &&
+         "Failed to compare linked lists because at least one of the pointers "
+         "was NULL");
+
+  if (list1 == list2) {
+    // The pointers refer to the same object
+    return true;
+  }
+
+  if (list1->length != list2->length) {
+    return false;
+  }
+
+  node *n1 = list1->head;
+  node *n2 = list2->head;
+  while (n1 != NULL) {
+    if (n1->value != n2->value) {
+      return false;
+    }
+    n1 = n1->next;
+    n2 = n2->next;
+  }
+  return true;
 }
 
 void llist_print(llist *list) {

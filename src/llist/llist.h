@@ -29,6 +29,7 @@
 typedef struct llist llist;
 
 llist *llist_create();
+llist *llist_create_from_values(int *values, size_t length);
 void llist_destroy(llist *list);
 size_t llist_length(llist *list);
 bool llist_insert(llist *list, size_t index, int value);
@@ -40,6 +41,7 @@ void llist_set(llist *list, size_t index, int value);
 int llist_get(llist *list, size_t index);
 void llist_clear(llist *list);
 bool llist_contains(llist *list, int value);
+bool llist_equals(llist *list1, llist *list2);
 void llist_print(llist *list);
 
 #endif

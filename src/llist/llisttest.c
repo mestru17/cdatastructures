@@ -55,6 +55,26 @@ int main() {
 
   printf("\n");
 
+  int values[12] = {84, 336, 168, 0, 2, 4, 6, 8, 10, 12345, 14, 16};
+  llist *list2 = llist_create_from_values(values, 12);
+  llist_print(list2);
+
+  char *equals = llist_equals(list, list) ? "true" : "false";
+  printf("list == list? %s\n", equals);
+  equals = llist_equals(list, list2) ? "true" : "false";
+  printf("list == list2? %s\n", equals);
+  equals = llist_equals(list, list2) ? "true" : "false";
+  llist_destroy(list2);
+
+  list2 = llist_create();
+  llist_print(list2);
+  llist_push(list2, 42);
+  equals = llist_equals(list, list2) ? "true" : "false";
+  printf("list == list2? %s\n", equals);
+  llist_destroy(list2);
+
+  printf("\n");
+
   char *contains;
   for (int i = llist_length(list) - 1; i >= 0; i--) {
     value = llist_get(list, i);
