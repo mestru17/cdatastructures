@@ -55,6 +55,23 @@ int main() {
 
   printf("\n");
 
+  size_t position;
+  for (int i = llist_length(list) - 1; i >= 0; i--) {
+    value = llist_get(list, i);
+    if (llist_position(list, value, &position)) {
+      printf("Found %d at index %lu\n", value, position);
+    } else {
+      printf("Did not find %d\n", value);
+    }
+  }
+  if (llist_position(list, 54321, &position)) {
+    printf("Found %d at index %lu\n", 54321, position);
+  } else {
+    printf("Did not find %d\n", 54321);
+  }
+
+  printf("\n");
+
   int values[12] = {84, 336, 168, 0, 2, 4, 6, 8, 10, 12345, 14, 16};
   llist *list2 = llist_create_from_values(values, 12);
   llist_print(list2);

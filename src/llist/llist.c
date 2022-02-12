@@ -266,6 +266,25 @@ bool llist_equals(llist *list1, llist *list2) {
   return true;
 }
 
+bool llist_position(llist *list, int value, size_t *index) {
+  assert(list != NULL &&
+         "Failed to find position of element in linked list because list "
+         "pointer was NULL");
+  assert(index != NULL &&
+         "Failed to return position of element in linked list because index "
+         "pointer was NULL");
+
+  size_t position = 0;
+  for (node *ni = list->head; ni != NULL; ni = ni->next) {
+    if (ni->value == value) {
+      *index = position;
+      return true;
+    }
+    position++;
+  }
+  return false;
+}
+
 void llist_print(llist *list) {
   assert(list != NULL &&
          "Failed to print linked list because pointer was NULL");
