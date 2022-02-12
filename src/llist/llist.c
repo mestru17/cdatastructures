@@ -214,6 +214,19 @@ void llist_clear(llist *list) {
   list->length = 0;
 }
 
+bool llist_contains(llist *list, int value) {
+  assert(
+      list != NULL &&
+      "Failed to check if linked list contains value because pointer was NULL");
+
+  for (node *ni = list->head; ni != NULL; ni = ni->next) {
+    if (ni->value == value) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void llist_print(llist *list) {
   assert(list != NULL &&
          "Failed to print linked list because pointer was NULL");

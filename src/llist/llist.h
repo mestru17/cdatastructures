@@ -39,6 +39,7 @@ int llist_pop(llist *list);
 void llist_set(llist *list, size_t index, int value);
 int llist_get(llist *list, size_t index);
 void llist_clear(llist *list);
+bool llist_contains(llist *list, int value);
 void llist_print(llist *list);
 
 #endif

@@ -55,6 +55,18 @@ int main() {
 
   printf("\n");
 
+  char *contains;
+  for (int i = llist_length(list) - 1; i >= 0; i--) {
+    value = llist_get(list, i);
+    contains = llist_contains(list, value) ? "true" : "false";
+    printf("list contains %d? %s\n", value, contains);
+  }
+  value = 54321;
+  contains = llist_contains(list, value) ? "true" : "false";
+  printf("list contains %d? %s\n", value, contains);
+
+  printf("\n");
+
   llist_clear(list);
   llist_print(list);
 
