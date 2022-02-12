@@ -1,14 +1,14 @@
 
-all: vectortest llisttest
+ROOT=$(CURDIR)
+SRC=$(ROOT)/src
+DIRS=vector llist
 
-%.o: %.c
-	gcc -g -Wall -c $^
-
-vectortest: vectortest.o vector.o
-	gcc -g -Wall -o $@ $^
-
-llisttest: llisttest.o llist.o
-	gcc -g -Wall -o $@ $^
+all:
+	for dir in $(DIRS); do\
+		cd $(SRC)/$$dir; make;\
+	done
 
 clean:
-	rm -rf vectortest llisttest *.o
+	for dir in $(DIRS); do\
+		cd $(SRC)/$$dir; make clean;\
+	done
