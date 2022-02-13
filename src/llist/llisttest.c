@@ -28,20 +28,29 @@ int main() {
   printf("\n");
 
   for (int i = 0; i < 10; i++) {
-    llist_push(list, i * 2);
+    llist_push_back(list, i * 2);
+    llist_push_front(list, i * 2);
     llist_print(list);
   }
 
   printf("\n");
 
-  value = llist_pop(list);
-  printf("Popped %d\n", value);
+  value = llist_pop_back(list);
+  printf("Popped %d from back\n", value);
+  llist_print(list);
+
+  value = llist_pop_front(list);
+  printf("Popped %d from front\n", value);
   llist_print(list);
 
   printf("\n");
 
-  value = llist_peek(list);
-  printf("Peeked %d\n", value);
+  value = llist_back(list);
+  printf("Peeked %d from back\n", value);
+  llist_print(list);
+
+  value = llist_front(list);
+  printf("Peeked %d from front\n", value);
   llist_print(list);
 
   printf("\n");
@@ -72,8 +81,9 @@ int main() {
 
   printf("\n");
 
-  int values[12] = {84, 336, 168, 0, 2, 4, 6, 8, 10, 12345, 14, 16};
-  llist *list2 = llist_create_from_values(values, 12);
+  int values[21] = {16,  14, 12, 10, 8, 6, 4,  2,  0,  12345, 336,
+                    168, 0,  2,  4,  6, 8, 10, 12, 14, 16};
+  llist *list2 = llist_create_from_values(values, 21);
   llist_print(list2);
 
   char *equals = llist_equals(list, list) ? "true" : "false";
@@ -85,7 +95,7 @@ int main() {
 
   list2 = llist_create();
   llist_print(list2);
-  llist_push(list2, 42);
+  llist_push_back(list2, 42);
   equals = llist_equals(list, list2) ? "true" : "false";
   printf("list == list2? %s\n", equals);
   llist_destroy(list2);

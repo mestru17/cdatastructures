@@ -98,7 +98,7 @@ llist *llist_create_from_values(int *values, size_t length) {
   llist *list = llist_create();
   for (int i = 0; i < length; i++) {
     int value = *(values + i);
-    llist_push(list, value);
+    llist_push_back(list, value);
   }
   return list;
 }
@@ -172,22 +172,44 @@ int llist_remove(llist *list, size_t index) {
   return value;
 }
 
-bool llist_push(llist *list, int value) {
-  assert(list != NULL &&
-         "Failed to push value into linked list because pointer was NULL");
+bool llist_push_back(llist *list, int value) {
+  assert(
+      list != NULL &&
+      "Failed to push value onto back of linked list because pointer was NULL");
   return llist_insert(list, list->length, value);
 }
 
-int llist_peek(llist *list) {
+int llist_back(llist *list) {
   assert(list != NULL &&
-         "Failed to peek value from linked list because pointer was NULL");
+         "Failed to get back value from linked list because pointer was NULL");
   return llist_get(list, list->length - 1);
 }
 
-int llist_pop(llist *list) {
-  assert(list != NULL &&
-         "Failed to peek value from linked list because pointer was NULL");
+int llist_pop_back(llist *list) {
+  assert(
+      list != NULL &&
+      "Failed to pop value from back of linked list because pointer was NULL");
   return llist_remove(list, list->length - 1);
+}
+
+bool llist_push_front(llist *list, int value) {
+  assert(list != NULL &&
+         "Failed to push value onto front of linked list because pointer was "
+         "NULL");
+  return llist_insert(list, 0, value);
+}
+
+int llist_front(llist *list) {
+  assert(list != NULL &&
+         "Failed to get front value from linked list because pointer was NULL");
+  return llist_get(list, 0);
+}
+
+int llist_pop_front(llist *list) {
+  assert(
+      list != NULL &&
+      "Failed to pop value from front of linked list because pointer was NULL");
+  return llist_remove(list, 0);
 }
 
 void llist_set(llist *list, size_t index, int value) {
