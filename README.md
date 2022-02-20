@@ -9,3 +9,6 @@ Implementations of various data structures in C.
 - [ ] HashSet
 - [ ] TreeSet
 - [ ] ...
+
+## Requirements
+- [globuild](https://github.com/mestru17/globuild) to build

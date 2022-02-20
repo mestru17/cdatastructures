@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 
-#include "llist.h"
+#include "../src/llist/llist.h"
 
 int main() {
   llist *list = llist_create();

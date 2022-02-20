@@ -22,7 +22,7 @@
 
 #include <stdio.h>
 
-#include "vector.h"
+#include "../src/vector/vector.h"
 
 int main() {
   vector *vec = vector_create(10);
